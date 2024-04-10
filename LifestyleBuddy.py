@@ -1,9 +1,9 @@
 '''
-Streamlit app - Lifestyle Buddy - one app to predict whether a person is high risk of having/towards chronic disease, 
+Streamlit app - Healthapp Chroniscope - one app to predict whether a person is high risk of having/towards chronic disease, 
 and a lifestyle guide to meal choices based on one's health risk and meal preference. 
 
-Note: perform the following before able to access the app from web browser
-1. Update the path to load the pickle .pkl file 
+This app is hosted on streamlit.io 
+The code repository linked to streamlit.io is available on https://github.com/cy-chin/HealthHub-Chroniscope-demoe 
 
 '''
 
