@@ -21,20 +21,20 @@ import pickle
 # import recommender
 
 #### External resources loading ###
-pkl_path = Path(__file__).parents[1] / "streamlit/trained_model.pkl"
+pkl_path = Path(__file__).parents[1] / "trained_model.pkl"
 with open(pkl_path, 'rb') as model_file:
     model = pickle.load(model_file)
 
-hh_favicon_path = Path(__file__).parents[1] / "streamlit/hh_favicon.png"
+hh_favicon_path = Path(__file__).parents[1] / "hh_favicon.png"
 hh_favicon = Image.open(hh_favicon_path)
 
-hh_path = Path(__file__).parents[1] / "streamlit/hhg.gif"
+hh_path = Path(__file__).parents[1] / "hhg.gif"
 hh_image = Image.open(hh_path)
 
-food_path = Path(__file__).parents[1] / "streamlit/food_data_v3.csv"
+food_path = Path(__file__).parents[1] / "food_data_v3.csv"
 df_food = pd.read_csv(food_path)
 
-diet_path = Path(__file__).parents[1] / "streamlit/category_diet_v3.csv"
+diet_path = Path(__file__).parents[1] / "category_diet_v3.csv"
 df_diet = pd.read_csv(diet_path)
 
 
