@@ -41,10 +41,10 @@ pkl_path = "./trained_model.pkl"
 with open(pkl_path, 'rb') as model_file:
     model = pickle.load(model_file)
 
-hh_favicon_path = "./hh_favicon.png"
+hh_favicon_path = "./h365.png"
 hh_favicon = Image.open(hh_favicon_path)
 
-hh_path = "./hhg.gif"
+hh_path = "./h365.gif"
 hh_image = Image.open(hh_path)
 
 food_path = "./food_data_v3.csv"
@@ -258,7 +258,8 @@ st.image(hh_image)
 tab1, tab2 = st.tabs(["Questionnaire","Food Guide"])
 
 with tab1:
-    st.header("⏳Chronic Disease Risk Assessment")
+    st.header("⏳Chroniscope⏳")
+    st.subheader(" ~ Chronic Disease Risk Assessment ~")
 
     # st.markdown("<ins>Data (for testing):</ins>", unsafe_allow_html=True)
     # st.write(df)
@@ -272,7 +273,7 @@ with tab1:
         # st.write(df)
         columns_to_check = ['CHCCOPD1', 'ADDEPEV2', '_DRDXAR1', 'CVDINFR4', 'CVDSTRK3', 'ASTHMA3', 'DIABETE3', 'CHCKIDNY', '_MICHD']
         
-        st.markdown("***Personal Particular***")
+        st.markdown("***Personal Particulars***")
 
         left, right = st.columns((1,1))
         x_age_AGEG5YR = get_age_group(left.number_input("Age", min_value = 18, max_value=99, value=31))
