@@ -1,6 +1,6 @@
 pandas
-sklearn.preprocessing.StandardScaler
-sklearn.metrics.pairwise.cosine_similarity
-pathlib.Path
-PIL.Image
+sklearn
+sklearn
+pathlib
+PIL
 pickle
