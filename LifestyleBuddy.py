@@ -10,13 +10,8 @@ Note: perform the following before able to access the app from web browser
 
 import streamlit as st
 import pandas as pd
-from sklearn.model_selection import train_test_split
-from sklearn.ensemble import RandomForestClassifier
-import numpy as np
 
 from sklearn.preprocessing import StandardScaler
-import matplotlib.pyplot as plt
-import seaborn as sns
 from sklearn.metrics.pairwise import cosine_similarity
 
 from pathlib import Path
