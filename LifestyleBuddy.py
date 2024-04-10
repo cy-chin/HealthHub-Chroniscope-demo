@@ -347,7 +347,7 @@ with tab1:
             y_pred = model.predict(input_df)
             
             st.session_state.prediction_outcome = y_pred[0]
-            y_pred[0] = 0
+
             if y_pred[0] == 1:
                 text_high_risk = f"❕You are at <b>HIGH RISK</b> of developing chronic disease❕"
                 html_high_risk = f"""<p style='background-color: rgb(250, 60, 60, 1); color: rgb(255,255,255,1); font-size:20px; 
