@@ -25,9 +25,6 @@ pkl_path = Path(__file__).parents[1] / "streamlit/trained_model.pkl"
 with open(pkl_path, 'rb') as model_file:
     model = pickle.load(model_file)
 
-df_path = Path(__file__).parents[1] / "streamlit/combined_df_small.csv"
-df = pd.read_csv(df_path)
-
 hh_favicon_path = Path(__file__).parents[1] / "streamlit/hh_favicon.png"
 hh_favicon = Image.open(hh_favicon_path)
 
