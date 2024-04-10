@@ -37,20 +37,20 @@ import pickle
 # diet_path = Path(__file__).parents[1] / "category_diet_v3.csv"
 # df_diet = pd.read_csv(diet_path)
 
-pkl_path = "trained_model.pkl"
+pkl_path = "./trained_model.pkl"
 with open(pkl_path, 'rb') as model_file:
     model = pickle.load(model_file)
 
-hh_favicon_path = "hh_favicon.png"
+hh_favicon_path = "./hh_favicon.png"
 hh_favicon = Image.open(hh_favicon_path)
 
-hh_path = "hhg.gif"
+hh_path = "./hhg.gif"
 hh_image = Image.open(hh_path)
 
-food_path = "food_data_v3.csv"
+food_path = "./food_data_v3.csv"
 df_food = pd.read_csv(food_path)
 
-diet_path = "category_diet_v3.csv"
+diet_path = "./category_diet_v3.csv"
 df_diet = pd.read_csv(diet_path)
 
 
