@@ -1,11 +1,10 @@
-'''
-Streamlit app - Healthapp Chroniscope - one app to predict whether a person is high risk of having/towards chronic disease, 
-and a lifestyle guide to meal choices based on one's health risk and meal preference. 
-
-This app is hosted on streamlit.io 
-The code repository linked to streamlit.io is available on https://github.com/cy-chin/HealthHub-Chroniscope-demoe 
-
-'''
+###
+##Streamlit app - Lifestyle Buddy - one app to predict whether a person is high risk of having/towards chronic disease, 
+##and a lifestyle guide to meal choices based on one's health risk and meal preference. 
+##
+##This app is hosted on streamlit.io 
+##The code repository linked to streamlit.io is available on https://github.com/cy-chin/HealthHub-Chroniscope-demo
+##
 
 
 import streamlit as st
@@ -18,39 +17,23 @@ from pathlib import Path
 from PIL import Image
 import pickle
 
-# import recommender
+
 
 #### External resources loading ###
-# pkl_path = Path(__file__).parents[1] / "trained_model.pkl"
-# with open(pkl_path, 'rb') as model_file:
-#     model = pickle.load(model_file)
-
-# hh_favicon_path = Path(__file__).parents[1] / "hh_favicon.png"
-# hh_favicon = Image.open(hh_favicon_path)
-
-# hh_path = Path(__file__).parents[1] / "hhg.gif"
-# hh_image = Image.open(hh_path)
-
-# food_path = Path(__file__).parents[1] / "food_data_v3.csv"
-# df_food = pd.read_csv(food_path)
-
-# diet_path = Path(__file__).parents[1] / "category_diet_v3.csv"
-# df_diet = pd.read_csv(diet_path)
-
-pkl_path = "./trained_model.pkl"
+pkl_path = Path(__file__).parents[1] / "streamlit/trained_model.pkl"
 with open(pkl_path, 'rb') as model_file:
     model = pickle.load(model_file)
 
-hh_favicon_path = "./h365.png"
+hh_favicon_path = Path(__file__).parents[1] / "streamlit/h365.png"
 hh_favicon = Image.open(hh_favicon_path)
 
-hh_path = "./h365.gif"
+hh_path = Path(__file__).parents[1] / "streamlit/h365.png"
 hh_image = Image.open(hh_path)
 
-food_path = "./food_data_v3.csv"
+food_path = Path(__file__).parents[1] / "streamlit/food_data_v3.csv"
 df_food = pd.read_csv(food_path)
 
-diet_path = "./category_diet_v3.csv"
+diet_path = Path(__file__).parents[1] / "streamlit/category_diet_v3.csv"
 df_diet = pd.read_csv(diet_path)
 
 
@@ -126,7 +109,11 @@ physical_activity_dict = {
 
 meal_cuisine_list = ['chinese', 'indian','malay', 'others','snack','western']
 
+
 #### Functions implementation ## 
+
+
+# map the age to a age group per dictionary definition
 def get_age_group(age):
     # if 18 <= age <= 24: 
     if age <= 24:   ## assuming all below 24 yr old will be "1", to avoid data entry error
@@ -156,6 +143,14 @@ def get_age_group(age):
     elif age >= 80:
         return 13
 
+
+# calculate BMI using height(cm) and weight(kg)
+def get_BMI(weight, height):
+    height_m = height / 100
+    return weight / (height_m**2)
+
+
+# mean center adjustment (for cosine similarity) 
 def mean_center_rows(data):
     # Create a copy of the data so we don't overwrite original
     data = data.copy()
@@ -170,7 +165,8 @@ def mean_center_rows(data):
     data = data.fillna(0)
     return data
 
-        
+
+# construct profile for the recommender's diet profile ID  
 def user_profile_mapping(user_profile):
 
     profile_cat = ""
@@ -204,8 +200,8 @@ def user_profile_mapping(user_profile):
     return profile_cat
 
 
-def recommender_food(user_profile):
-
+# Implement the Content-Based Filtering
+def recommender_food(user_profile) : 
     profile_cat = user_profile_mapping(user_profile)
     profile = pd.DataFrame(df_diet[df_diet["food_name"]==profile_cat])
     merged_df = pd.concat([df_food, profile], axis = 0) 
@@ -250,28 +246,16 @@ if "prediction_outcome" not in st.session_state:
 st.write("Welcome, :blue[Conrius]!")
 
 st.image(hh_image)
-# st.divider()
-# Set title of the app
-# st.title(":green[HealthHub]")
-# st.markdown("<h1 style='text-align: center; color: green;'>HealthHub</h1>", unsafe_allow_html=True)
 
 tab1, tab2 = st.tabs(["Questionnaire","Food Guide"])
 
 with tab1:
     st.header("⏳Chroniscope⏳")
-    st.subheader(" ~ Chronic Disease Risk Assessment ~")
-
-    # st.markdown("<ins>Data (for testing):</ins>", unsafe_allow_html=True)
-    # st.write(df)
-    # columns_to_check = ['CHCCOPD1', 'ADDEPEV2', '_DRDXAR1', 'CVDINFR4', 'CVDSTRK3', 'ASTHMA3', 'DIABETE3', 'CHCKIDNY', '_MICHD']
-    # X = df.drop(columns=columns_to_check)
-
-    # st.markdown("<ins>Predicted output through pickled pipeline:</ins>", unsafe_allow_html=True)
+    st.subheader(" Chronic Disease Risk Assessment")
 
     with st.form("questionnaire_form"):
-        # st.markdown("<ins>Data (for testing):</ins>", unsafe_allow_html=True)
-        # st.write(df)
-        columns_to_check = ['CHCCOPD1', 'ADDEPEV2', '_DRDXAR1', 'CVDINFR4', 'CVDSTRK3', 'ASTHMA3', 'DIABETE3', 'CHCKIDNY', '_MICHD']
+
+        columns_to_check = ['cpd_bronchitis', 'depression', 'arthritis', 'heart_attack', 'stroke', 'asthma', 'diabetes', 'kidney_disease', 'heart_disease']
         
         st.markdown("***Personal Particulars***")
 
@@ -309,41 +293,35 @@ with tab1:
 
 
         x_user_input.append( {
-            'WTKG3': x_weight_WTKG3,
-            'HTM4': x_height_HTM4,
-            '_AGEG5YR' : x_age_AGEG5YR,
-            '_EDUCAG' : x_edu_EDUCAG, 
-            'CHCSCNCR' : x_skincancer_CHCSCNCR,  
-            'CHCOCNCR' : x_cancer_CHCOCNCR,
-            'SEX' : x_gender_SEX,
-            'MARITAL' : x_marital_MARITAL,
-            'EMPLOY1' : x_employment_EMPLOY1,
-            'BLIND' : x_blind_BLIND,
-            'DIFFWALK' : x_walk_DIFFWALK,
-            'ALCDAY5' : x_alch_day_ALCDAY5,
-            '_RFHYPE5' : x_hbp_RFHYPE5,
-            '_SMOKER3' : x_smoker_SMOKER3,
-            'DRNKANY5' : x_alch_drink_DRNKANY5,
-            '_DRNKWEK' : x_alch_drink_DRNKWEK,
-            '_RFBING5' : x_alch_binge_RFBING5,
-            '_RFCHOL' : x_cholesterol_RFCHOL,
-            '_FRTLT1' : x_fruit_consume_FRTLT1,
-            '_VEGLT1' : x_vege_consume_VEGLT1,
-            '_PA150R2' : x_exercise_PA150R2, 
-            'CD' : 1   #the current WIP model has "CD" as a feature. Hardcode here for development, to be removed. 
+            'BMI' : get_BMI(x_weight_WTKG3, x_height_HTM4), 
+            'age' : x_age_AGEG5YR,
+            'education' : x_edu_EDUCAG, 
+            'skin_cancer' : x_skincancer_CHCSCNCR,  
+            'other_cancer' : x_cancer_CHCOCNCR,
+            'sex' : x_gender_SEX,
+            'martial' : x_marital_MARITAL,
+            'employment_status' : x_employment_EMPLOY1,
+            'blind' : x_blind_BLIND,
+            'diff_walking' : x_walk_DIFFWALK,
+            'occasion_drink_30days' : x_alch_day_ALCDAY5,
+            'high_bp' : x_hbp_RFHYPE5,
+            'smoker_status' : x_smoker_SMOKER3,
+            'one_alc_per_day' : x_alch_drink_DRNKANY5,
+            'ave_drink_week' : x_alch_drink_DRNKWEK,
+            'binge_drink' : x_alch_binge_RFBING5,
+            'high_cholesterol' : x_cholesterol_RFCHOL,
+            'fruit' : x_fruit_consume_FRTLT1,
+            'vegetable' : x_vege_consume_VEGLT1,
+            'exercise_cat' : x_exercise_PA150R2, 
         })
 
 
         st.divider()
-        # y_pred = model.predict(X)
-        # st.write(y_pred)
         submit1 = st.form_submit_button('Submit') 
 
         if submit1:
 
             input_df = pd.DataFrame(x_user_input)
-            # st.write("[DEBIG] Button Clicked")
-            # st.write(input_df)
 
             y_pred = model.predict(input_df)
             
@@ -395,14 +373,10 @@ with tab2:
                 food_details = df_food.copy()
                 food_details.set_index("food_name", inplace=True)
                 food_details.drop(columns = "cuisine", inplace=True)
-
-                # st.write(food_details.iloc[0:3,0:6])
                 st.dataframe(food_details.loc[recommended_list[0:5]], use_container_width=True)
-                # for recommend_food in recommended_list:
-                #     st.write(food_dataset.food_name == recommend_food)
                 
                 # st.write("[DEBUG] full list")
-                # st.write(recommended_list)
+                # st.write(recommended_list[0:5])
                     
 
 
