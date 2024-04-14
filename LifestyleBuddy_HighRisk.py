@@ -258,7 +258,7 @@ st.set_page_config(page_title='HealthHub - ChroniScope (POC)',
 if "prediction_outcome" not in st.session_state:
     st.session_state.prediction_outcome = -1
 
-st.write("Welcome, :blue[Conrius]!")
+st.write("Welcome, :blue[XiaoMei]!")
 
 st.image(hh_image)
 
