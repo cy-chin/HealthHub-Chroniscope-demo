@@ -20,22 +20,6 @@ import pickle
 
 
 #### External resources loading ###
-# pkl_path = Path(__file__).parents[1] / "streamlit/trained_model.pkl"
-# with open(pkl_path, 'rb') as model_file:
-#     model = pickle.load(model_file)
-
-# hh_favicon_path = Path(__file__).parents[1] / "streamlit/h365.png"
-# hh_favicon = Image.open(hh_favicon_path)
-
-# hh_path = Path(__file__).parents[1] / "streamlit/h365.png"
-# hh_image = Image.open(hh_path)
-
-# food_path = Path(__file__).parents[1] / "streamlit/food_data_v3.csv"
-# df_food = pd.read_csv(food_path)
-
-# diet_path = Path(__file__).parents[1] / "streamlit/category_diet_v3.csv"
-# df_diet = pd.read_csv(diet_path)
-
 pkl_path = "./trained_model.pkl"
 with open(pkl_path, 'rb') as model_file:
     model = pickle.load(model_file)
@@ -126,8 +110,6 @@ meal_cuisine_list = ['chinese', 'indian','malay', 'others','snack','western']
 
 
 #### Functions implementation ## 
-
-
 # map the age to a age group per dictionary definition
 def get_age_group(age):
     # if 18 <= age <= 24: 
